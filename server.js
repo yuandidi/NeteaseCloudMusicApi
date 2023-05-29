@@ -8,7 +8,8 @@ const cache = require('./util/apicache').middleware
 const { cookieToJson } = require('./util/index')
 const fileUpload = require('express-fileupload')
 const decode = require('safe-decode-uri-component')
-
+const {qq} = require('./util/qq')
+const { kugou } = require('./util/kugou')
 /**
  * The version check result.
  * @readonly
@@ -135,7 +136,21 @@ async function consturctServer(moduleDefs) {
   const app = express()
   const { CORS_ALLOW_ORIGIN } = process.env
   app.set('trust proxy', true)
-
+  // JANXLAND修改
+  let otherServerHandler = (req, res)=>{
+    const api_map = {
+      tencent:qq,
+      kugou:kugou,
+    }
+    try {
+      api_map[req.query.server].api_map[req.baseUrl](req._parsedUrl.search).success((data)=>{
+        res.status(200).send(data)
+      })  
+    } catch (error) {
+      res.status(500).send({msg:"666"})
+    }
+  }
+  //JANXLAND修改
   /**
    * CORS & Preflight request
    */
@@ -206,7 +221,12 @@ async function consturctServer(moduleDefs) {
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
     app.use(moduleDef.route, async (req, res) => {
-      ;[req.query, req.body].forEach((item) => {
+      if(req.query.server&&req.query.server!="netease") {
+        otherServerHandler(req,res)
+        return;
+      } 
+      ;
+      [req.query, req.body].forEach((item) => {
         if (typeof item.cookie === 'string') {
           item.cookie = cookieToJson(decode(item.cookie))
         }
