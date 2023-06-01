@@ -226,13 +226,12 @@ async function consturctServer(moduleDefs) {
       const match = require('@unblockneteasemusic/server')
       if (req.baseUrl === '/song/unblock') {
         return match(req.query.id, [
-          'qq',
-          'xiami',
-          'baidu',
-          'kugou',
-          // 'kuwo',
+          // 'qq',
           'migu',
-          'joox',
+          'kugou',
+          'kuwo',
+          // 'joox',
+          // 'bilibili'
         ]).then((result) => {
           res.send(result)
         })
