@@ -227,15 +227,13 @@ async function consturctServer(moduleDefs) {
       if (req.baseUrl === '/song/unblock') {
         return match(req.query.id, [
           // 'qq',
+          // 'kuwo',
           'migu',
           'kugou',
-          'kuwo',
-          // 'joox',
           // 'bilibili'
         ]).then((result) => {
           res.send(result)
         })
-        return
       }
       if (req.query.server && req.query.server != 'netease') {
         otherServerHandler(req, res)
