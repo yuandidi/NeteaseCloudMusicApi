@@ -230,7 +230,7 @@ async function consturctServer(moduleDefs) {
           'xiami',
           'baidu',
           'kugou',
-          'kuwo',
+          // 'kuwo',
           'migu',
           'joox',
         ]).then((result) => {
