@@ -1070,7 +1070,9 @@ export const enum SoundQualityType {
 export function song_url_v1(
   params: { id: string | number; level: SoundQualityType } & RequestBaseConfig,
 ): Promise<Response>
-
+export function song_unblock(
+  params: { id: string } & RequestBaseConfig,
+): Promise<Response>
 export function top_album(
   params: {
     area?: AlbumListArea

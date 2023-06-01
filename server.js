@@ -8,7 +8,7 @@ const cache = require('./util/apicache').middleware
 const { cookieToJson } = require('./util/index')
 const fileUpload = require('express-fileupload')
 const decode = require('safe-decode-uri-component')
-const {qq} = require('./util/qq')
+const { qq } = require('./util/qq')
 const { kugou } = require('./util/kugou')
 /**
  * The version check result.
@@ -137,17 +137,19 @@ async function consturctServer(moduleDefs) {
   const { CORS_ALLOW_ORIGIN } = process.env
   app.set('trust proxy', true)
   // JANXLAND修改
-  let otherServerHandler = (req, res)=>{
+  let otherServerHandler = (req, res) => {
     const api_map = {
-      tencent:qq,
-      kugou:kugou,
+      tencent: qq,
+      kugou: kugou,
     }
     try {
-      api_map[req.query.server].api_map[req.baseUrl](req._parsedUrl.search).success((data)=>{
+      api_map[req.query.server].api_map[req.baseUrl](
+        req._parsedUrl.search,
+      ).success((data) => {
         res.status(200).send(data)
-      })  
+      })
     } catch (error) {
-      res.status(500).send({msg:"666"})
+      res.status(500).send({ msg: '666' })
     }
   }
   //JANXLAND修改
@@ -221,12 +223,26 @@ async function consturctServer(moduleDefs) {
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
     app.use(moduleDef.route, async (req, res) => {
-      if(req.query.server&&req.query.server!="netease") {
-        otherServerHandler(req,res)
-        return;
-      } 
-      ;
-      [req.query, req.body].forEach((item) => {
+      const match = require('@unblockneteasemusic/server')
+      if (req.baseUrl === '/song/unblock') {
+        return match(req.query.id, [
+          'qq',
+          'xiami',
+          'baidu',
+          'kugou',
+          'kuwo',
+          'migu',
+          'joox',
+        ]).then((result) => {
+          res.send(result)
+        })
+        return
+      }
+      if (req.query.server && req.query.server != 'netease') {
+        otherServerHandler(req, res)
+        return
+      }
+      ;[req.query, req.body].forEach((item) => {
         if (typeof item.cookie === 'string') {
           item.cookie = cookieToJson(decode(item.cookie))
         }
@@ -335,7 +351,6 @@ async function serveNcmApi(options) {
 
   return appExt
 }
-
 module.exports = {
   serveNcmApi,
   getModulesDefinitions,
