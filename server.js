@@ -229,7 +229,7 @@ async function consturctServer(moduleDefs) {
           // 'qq',
           // 'kuwo',
           'migu',
-          'kugou',
+          // 'kugou',
           // 'bilibili'
         ]).then((result) => {
           res.send(result)
