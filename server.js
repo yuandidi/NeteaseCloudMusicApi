@@ -227,7 +227,7 @@ async function consturctServer(moduleDefs) {
         const match = require('@unblockneteasemusic/server')
         return match(req.query.id, [
           // 'qq',
-          'kuwo',
+          // 'kuwo',
           'migu',
           'kugou',
           // 'bilibili'
