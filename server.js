@@ -222,12 +222,10 @@ async function consturctServer(moduleDefs) {
 
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
+    const puppeteer = require('puppeteer')
     app.use('/puppeteer', async (req, res) => {
-      const puppeteer = require('puppeteer')
-      const chrome = require('chrome-aws-lambda')
       const browser = await puppeteer.launch({
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
+        executablePath: './chrome',
         headless: true,
       })
       const page = await browser.newPage()
@@ -240,7 +238,7 @@ async function consturctServer(moduleDefs) {
       if (req.baseUrl === '/song/unblock') {
         const match = require('@unblockneteasemusic/server')
         if (req.query.https) {
-          return match(req.query.id, ['migu']).then((result) => {
+          return match(req.query.id, ['migu', 'kugou']).then((result) => {
             res.send(result)
           })
         } else {
