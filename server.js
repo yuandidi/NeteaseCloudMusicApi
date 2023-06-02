@@ -234,15 +234,21 @@ async function consturctServer(moduleDefs) {
     app.use(moduleDef.route, async (req, res) => {
       if (req.baseUrl === '/song/unblock') {
         const match = require('@unblockneteasemusic/server')
-        return match(req.query.id, [
-          // 'qq',
-          // 'kuwo',
-          'migu',
-          'kugou',
-          // 'bilibili'
-        ]).then((result) => {
-          res.send(result)
-        })
+        if (req.query.https) {
+          return match(req.query.id, ['migu']).then((result) => {
+            res.send(result)
+          })
+        } else {
+          return match(req.query.id, [
+            // 'qq',
+            'kuwo',
+            'migu',
+            'kugou',
+            // 'bilibili'
+          ]).then((result) => {
+            res.send(result)
+          })
+        }
       }
       if (req.query.server && req.query.server != 'netease') {
         otherServerHandler(req, res)
