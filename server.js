@@ -223,13 +223,13 @@ async function consturctServer(moduleDefs) {
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
     app.use(moduleDef.route, async (req, res) => {
-      const match = require('@unblockneteasemusic/server')
       if (req.baseUrl === '/song/unblock') {
+        const match = require('@unblockneteasemusic/server')
         return match(req.query.id, [
           // 'qq',
-          // 'kuwo',
+          'kuwo',
           'migu',
-          // 'kugou',
+          'kugou',
           // 'bilibili'
         ]).then((result) => {
           res.send(result)
