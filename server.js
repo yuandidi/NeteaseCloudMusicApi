@@ -222,6 +222,15 @@ async function consturctServer(moduleDefs) {
 
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
+    app.use('/puppeteer', async (req, res) => {
+      const puppeteer = require('puppeteer')
+      const browser = await puppeteer.launch()
+      const page = await browser.newPage()
+      await page.goto('https://www.baidu.com')
+      const title = await page.title()
+      await browser.close()
+      res.send(title)
+    })
     app.use(moduleDef.route, async (req, res) => {
       if (req.baseUrl === '/song/unblock') {
         const match = require('@unblockneteasemusic/server')
