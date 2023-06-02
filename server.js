@@ -224,7 +224,12 @@ async function consturctServer(moduleDefs) {
     // Register the route.
     app.use('/puppeteer', async (req, res) => {
       const puppeteer = require('puppeteer')
-      const browser = await puppeteer.launch()
+      const chrome = require('chrome-aws-lambda')
+      const browser = await puppeteer.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: true,
+      })
       const page = await browser.newPage()
       await page.goto('https://www.baidu.com')
       const title = await page.title()
