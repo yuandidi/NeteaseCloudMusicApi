@@ -224,9 +224,8 @@ async function consturctServer(moduleDefs) {
     // Register the route.
     const axios = require('axios')
 
-    // GET 请求，接收一个名为 "url" 的查询参数
     app.use('/puppeteer', async (req, res) => {
-      const url = req.query.url
+      const url = req.body.url || req.query.url
       if (!url) {
         return res.status(400).send('Missing "url" parameter')
       }
