@@ -222,10 +222,11 @@ async function consturctServer(moduleDefs) {
 
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
-    const axios = require('axios')
+    let axios = require('axios')
 
     app.use('/puppeteer', async (req, res) => {
-      const url = req.body.url || req.query.url
+      let url = req.body.url || req.query.url
+      url = decodeURIComponent(url)
       if (!url) {
         return res.status(400).send('Missing "url" parameter')
       }
