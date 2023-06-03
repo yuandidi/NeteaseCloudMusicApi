@@ -222,17 +222,21 @@ async function consturctServer(moduleDefs) {
 
   for (const moduleDef of moduleDefinitions) {
     // Register the route.
-    const puppeteer = require('puppeteer')
+    const axios = require('axios')
+
+    // GET 请求，接收一个名为 "url" 的查询参数
     app.use('/puppeteer', async (req, res) => {
-      const browser = await puppeteer.launch({
-        executablePath: './chrome',
-        headless: true,
-      })
-      const page = await browser.newPage()
-      await page.goto('https://www.baidu.com')
-      const title = await page.title()
-      await browser.close()
-      res.send(title)
+      const url = req.query.url
+      if (!url) {
+        return res.status(400).send('Missing "url" parameter')
+      }
+      try {
+        const response = await axios.get(url)
+        res.send(response.data)
+      } catch (error) {
+        console.error(error)
+        res.status(500).send('Error fetching URL content')
+      }
     })
     app.use(moduleDef.route, async (req, res) => {
       if (req.baseUrl === '/song/unblock') {
