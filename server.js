@@ -240,13 +240,16 @@ async function consturctServer(moduleDefs) {
     })
     app.use(moduleDef.route, async (req, res) => {
       if (req.baseUrl === '/song/unblock') {
-        const match = require('@unblockneteasemusic/server')
         if (req.query.https == 'true') {
-          return match(req.query.id, ['migu', 'kugou', 'pyncmd']).then(
-            (result) => {
-              res.send(result)
-            },
-          )
+          return match(req.query.id, [
+            'pyncmd',
+            'qq',
+            'kugou',
+            'kuwo',
+            'bilibili',
+          ]).then((result) => {
+            res.send(result)
+          })
         } else {
           return match(req.query.id, [
             'pyncmd',
