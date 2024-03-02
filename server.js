@@ -239,6 +239,7 @@ async function consturctServer(moduleDefs) {
       }
     })
     app.use(moduleDef.route, async (req, res) => {
+      const match = require('@unblockneteasemusic/server')
       if (req.baseUrl === '/song/unblock') {
         if (req.query.https == 'true') {
           return match(req.query.id, [

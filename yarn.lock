@@ -327,10 +327,10 @@
     "@typescript-eslint/types" "5.0.0"
     eslint-visitor-keys "^3.0.0"
 
-"@unblockneteasemusic/server@^0.27.5-dev":
-  version "0.27.5-dev"
-  resolved "https://registry.npmmirror.com/@unblockneteasemusic/server/-/server-0.27.5-dev.tgz"
-  integrity sha512-TGpfaOSeJgIxjOaot0UKY9uq6ttWuINbmH17ygeJWgJ25aywSzLWB6MF23B+u1LMGsK57CVjUZ8jtdDl/a8eaQ==
+"@unblockneteasemusic/server@^0.27.5":
+  version "0.27.5"
+  resolved "https://registry.npmmirror.com/@unblockneteasemusic/server/-/server-0.27.5.tgz"
+  integrity sha512-z4T1/H4xKrtGqCEZ5Q+FD2UM2rZ6JHjpOHfL4kTtUj/UzMh3R2EVmEFlm9gsyUthkth3UDB+28nU7Zx9pKxMMw==
   dependencies:
     node-windows "^1.0.0-beta.8"
     pino "6.14.0"
