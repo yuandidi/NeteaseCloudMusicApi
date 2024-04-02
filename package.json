@@ -63,7 +63,6 @@
     "public"
   ],
   "dependencies": {
-    "@unblockneteasemusic/server": "^0.27.5",
     "axios": "^1.2.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.9",
