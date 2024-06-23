@@ -226,12 +226,15 @@ async function consturctServer(moduleDefs) {
 
     app.use('/puppeteer', async (req, res) => {
       let url = req.body.url || req.query.url
-      url = decodeURIComponent(url)
       if (!url) {
         return res.status(400).send('Missing "url" parameter')
       }
       try {
-        const response = await axios.get(url)
+        const response = await axios.get(url, {
+          headers: {
+            'User-Agent': 'janxland/ablaze-backend',
+          },
+        })
         res.send(response.data)
       } catch (error) {
         console.error(error)
